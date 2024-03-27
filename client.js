@@ -46,11 +46,12 @@ let employee = {
   name: 'Atticus',
   employeeNumber: '2405', // 5%
   annualSalary: '67000', // -1%
-  reviewRating: 3,  // 4%
+  reviewRating: 3, // 4%
 };
 
 // This function will calculate 1 employee's bonus!
 //
+
 function calculateIndividualEmployeeBonus(employee) {
   let rating = employee.reviewRating;
   let employeeNumber = Number(employee.employeeNumber);
@@ -58,6 +59,7 @@ function calculateIndividualEmployeeBonus(employee) {
 
   let ratingBonus;
   let bonusPercentage;
+
   switch (rating) {
     // rating of a 3 should receive a base bonus of 4% of their base annual income
     case 3:
@@ -75,32 +77,51 @@ function calculateIndividualEmployeeBonus(employee) {
       break;
   }
   //  Test that you're receiving rating bonus
-  console.log('Rating Bonus:', ratingBonus);
-  console.log('Rating Bonus Percentage', bonusPercentage);
+  console.log('Rating Bonus: $', ratingBonus);
+  console.log('Rating Bonus %', bonusPercentage * 100);
 
   // If their employee number is 4 digits long, this means they have been with the company for longer than 15 years, and should receive an additional 5%.
 
   let employeeNumberLength = employeeNumber.toString().length;
+  let employeeNumBonusPercentage = 0.05;
 
   if (employeeNumberLength === 4) {
-    let employeeNumBonusPercentage = 0.05;
     let employeeNumberBonus = annualIncome * employeeNumBonusPercentage;
-    console.log('Number Bonus:', employeeNumberBonus);
-    console.log('Number Bonus Percentage', employeeNumBonusPercentage);
+    console.log('Employee # Bonus: $', employeeNumberBonus);
+    console.log('Employee # Bonus %', employeeNumBonusPercentage * 100);
+    let percentage = (bonusPercentage + employeeNumBonusPercentage) * 100;
+    let bonusDollars = ratingBonus + employeeNumberBonus;
+    console.log('Review Rating Bonus % + Employee # %', percentage);
+    console.log('Review Rating Bonus % + Employee # $', bonusDollars);
+
+    if (annualIncome > 65000) {
+      let employeeNegativeAdjustmentPercentage = -0.01;
+      let negativeAdjustment =
+        annualIncome * employeeNegativeAdjustmentPercentage;
+      negativeAdjustment + annualIncome;
+      percentage = percentage + employeeNegativeAdjustmentPercentage * 100;
+      bonusDollars = bonusDollars + negativeAdjustment;
+      console.log('Negative Adjustment $:', negativeAdjustment);
+      console.log(
+        'Negative Adjustment %:',
+        employeeNegativeAdjustmentPercentage * 100
+      );
+      // No bonus can be above 13% or below 0% total.
+    }
+
+    // name property should contain the employee's name.
+    console.log('Name:', employee.name);
+
+    // bonusPercentage property should contain the bonus percentage the employee is to receive.
+    console.log('Total Bonus %:', percentage);
+
+    // The totalBonus should be the employee's total bonus rounded to the nearest dollar.
+    console.log('Total Bonus $', bonusDollars);
+
+    // totalCompensation property should be the adjusted annual compensation (base annual + bonus)
+    console.log('Total Compensation $', bonusDollars + annualIncome);
   }
-  if (annualIncome > 65000) {
-    let employeeNegativeAdjustmentPercentage = 0.01;
-    let negativeAdjustment =
-      annualIncome * employeeNegativeAdjustmentPercentage;
-    negativeAdjustment - annualIncome;
-    console.log('Negative Adjustment:', negativeAdjustment);
-    console.log(
-      'Negative Adjustment Percentage:',
-      employeeNegativeAdjustmentPercentage
-    );
-    return;     // What are we returning!?
-  }
-  // No bonus can be above 13% or below 0% total.
+  // employee.employee.bonusDollars = bonusDollars;
 }
 
 calculateIndividualEmployeeBonus(employee);
